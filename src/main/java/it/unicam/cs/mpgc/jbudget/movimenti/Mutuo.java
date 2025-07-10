@@ -5,12 +5,10 @@ import it.unicam.cs.mpgc.jbudget.valori.Importo;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class Mutuo {
+public class Mutuo extends MovimentiProgrammati{
 
     private String naturaMutuo;
-    private Importo importoMutuo;
     private final float tassoInteresse;
-    private final LocalDate dataCreazione;
     private ArrayList<MovimentoRata> rate;
 
     public Mutuo(Importo importo, float tassoInteresse){
@@ -18,12 +16,15 @@ public class Mutuo {
     }
 
     public Mutuo(String naturaMutuo, Importo importoMutuo, float tassoInteresse, LocalDate dataCreazione){
+        super(importoMutuo, dataCreazione);
         this.naturaMutuo = naturaMutuo;
-        this.importoMutuo = importoMutuo;
         this.tassoInteresse = tassoInteresse;
-        this.dataCreazione = dataCreazione;
+        rate = new ArrayList<>();
+        creaRateAnnue();
     }
 
-
+    private void creaRateAnnue(){
+        
+    }
 
 }

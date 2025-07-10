@@ -10,22 +10,26 @@ public abstract class Movimento implements Comparable<Movimento>{
     private boolean isUscita;
     private ArrayList<Tags> tagList;
     private int tagPiuImportante;
+    private boolean contabilizzato;
     
     public Movimento(Importo importo){
         this.importo = importo;
         isUscita = this.importo.getValoreIntero() < 0;
         tagList = new ArrayList<>();
         tagPiuImportante = 0;
+        contabilizzato = false;
     }
-    
+
+    public void contabilizza() { contabilizzato = true; }
+    public boolean isContabilizzato(){
+        return contabilizzato;
+    }
     public Importo getImporto() {
         return importo;
     }
-
     public boolean isUscita() {
         return isUscita;
     }
-
     public ArrayList<Tags> getTagList() {
         return tagList;
     }
@@ -67,8 +71,6 @@ public abstract class Movimento implements Comparable<Movimento>{
             tagList.remove(tag);
         }
     }
-
-
     public int compareTo(Movimento o) {
         return o.getTagList().get(tagPiuImportante).compareTo(getTagList().get(tagPiuImportante));
     }

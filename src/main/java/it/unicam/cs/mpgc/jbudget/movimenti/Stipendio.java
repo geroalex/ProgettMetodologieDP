@@ -5,19 +5,19 @@ import it.unicam.cs.mpgc.jbudget.valori.Importo;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class Stipendio  {
+public class Stipendio extends MovimentiProgrammati{
 
-    private final LocalDate dataAssunzione;
+    //private final LocalDate dataAssunzione;
     private LocalDate annoCorrente;
-    private Importo importo;
+
     private ArrayList<MensilitaStipendio> mensilitaAnnoCorrente;
     private MensilitaStipendio tredicesima;
 
 
     public Stipendio(LocalDate dataAssunzione, Importo importo){
+        super(importo, dataAssunzione);
         if(importo == null) throw new NullPointerException();
-        this.dataAssunzione = dataAssunzione;
-        this.importo = importo;
+        //this.dataAssunzione = dataAssunzione;
         mensilitaAnnoCorrente = new ArrayList<>();
         generaMensilitaAnnoCorrente();
     }
@@ -36,20 +36,20 @@ public class Stipendio  {
     *      lavorati (8% dello stipendio mensile per ogni mese rimanente nell'anno dalla data di assunzione)
     */
     protected void generaMensilitaAnnoCorrente(){
-        Importo stipendioMensile = new Importo(importo.getValoreDouble() / 12);
+        Importo stipendioMensile = new Importo(getImporto().getValoreDouble() / 12);
         annoCorrente = LocalDate.of(LocalDate.now().getYear(), 1, 28);
         for(int i = 0; i < 12; i++)
             mensilitaAnnoCorrente.add(new MensilitaStipendio(stipendioMensile, annoCorrente.plusMonths(i), this));
 
         for(MensilitaStipendio m : mensilitaAnnoCorrente)
-            if(m.getDataStipendio().isBefore(LocalDate.now())) m.impostaPagato(true);
+            if(m.getDataStipendio().isBefore(LocalDate.now())) m.contabilizza();
 
-        if(!(dataAssunzione.getYear() == annoCorrente.getYear())){
+        if(!(getQuando().getYear() == annoCorrente.getYear())){
             tredicesima = new MensilitaStipendio(stipendioMensile, LocalDate.of(annoCorrente.getYear(), 12, 31), this);
             return;
         }
 
-        int mesiDaConsiderare = 12 - dataAssunzione.getMonthValue();
+        int mesiDaConsiderare = 12 - getQuando().getMonthValue();
         tredicesima = new MensilitaStipendio(new Importo((stipendioMensile.getValoreDouble() * 0.08) * mesiDaConsiderare), LocalDate.of(annoCorrente.getYear(), 12, 31), this);
 
     }
@@ -62,42 +62,7 @@ public class Stipendio  {
     @Deprecated
     public void cancellaStipendio(){
         mensilitaAnnoCorrente.clear();
-        importo = null;
-    }
-
-    public LocalDate getDataAssunzione() {
-        return dataAssunzione;
-    }
-
-    public Importo getImporto() {
-        return importo;
-    }
-
-    /**
-     * Sets the value of the importo field.
-     *
-     * @param importo the new value to assign to the importo field
-     */
-    public void setImporto(Importo importo){
-        this.importo = importo;
-    }
-
-    /**
-     * Increases the current 'importo' field by adding the specified 'importo' value.
-     *
-     * @param importo the amount to be added to the current 'importo'
-     */
-    public void aumenta(Importo importo){
-        this.importo.aggiungi(importo);
-    }
-
-    /**
-     * Decreases the current value of the 'importo' field by subtracting the specified 'importo' value.
-     *
-     * @param importo the amount to be subtracted from the current 'importo'
-     */
-    public void diminuisci(Importo importo){
-        this.importo.sottrai(importo);
+        setImporto(null);
     }
 
     public LocalDate getAnnoCorrente(){ return annoCorrente; }

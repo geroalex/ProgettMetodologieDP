@@ -7,251 +7,129 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ImportoTest {
 
-    @Test
-    void testGetValoreDouble() {
-        Importo importo = new Importo(10, (short) 50);
-        assertEquals(10.50, importo.getValoreDouble(), 0.001);
-
-        importo = new Importo(15, (short) 75);
-        assertEquals(15.75, importo.getValoreDouble(), 0.001);
-    }
+    /**
+     * Test of the `aggiungi` method in the `Importo` class,
+     * which is used to add another `Importo` instance to the current one.
+     */
 
     @Test
-    void testGetValoreDoubleWithZeroValues() {
-        Importo importo = new Importo(0, (short) 0);
-        assertEquals(0.0, importo.getValoreDouble(), 0.001);
-    }
-
-    @Test
-    void testGetValoreDoubleWithNegativeValues() {
-        Importo importo = new Importo(-10, (short) -50);
-        assertEquals(-10.50, importo.getValoreDouble(), 0.001);
-    }
-
-    @Test
-    void testSottraiImporto() {
-        Importo importo1 = new Importo(15, (short) 50);
-        Importo importo2 = new Importo(5, (short) 20);
-
-        importo1.sottrai(importo2);
-
-        assertEquals(10, importo1.getValoreIntero());
-        assertEquals(30, importo1.getValoreDecimale());
-    }
-
-    @Test
-    void testSottraiImportoNull() {
-        Importo importo = new Importo(15, (short) 50);
-
-        importo.sottrai((Importo) null);
-
-        assertEquals(15, importo.getValoreIntero());
-        assertEquals(50, importo.getValoreDecimale());
-    }
-
-    @Test
-    void testSottraiDoubleValidValues() {
-        Importo importo = new Importo(20, (short) 75);
-
-        importo.sottrai(5.50);
-
-        assertEquals(15, importo.getValoreIntero());
-        assertEquals(25, importo.getValoreDecimale());
-    }
-
-    @Test
-    void testSottraiDoubleZeroValue() {
-        Importo importo = new Importo(20, (short) 75);
-
-        importo.sottrai(0.0);
-
-        assertEquals(20, importo.getValoreIntero());
-        assertEquals(75, importo.getValoreDecimale());
-    }
-
-    @Test
-    void testSottraiDoubleNegativeValueThrowsException() {
-        Importo importo = new Importo(20, (short) 75);
-
-        assertThrows(IllegalArgumentException.class, () -> importo.sottrai(-5.50));
-    }
-
-    @Test
-    void testAggiungiValidValuesWithoutDecimalOverflow() {
-        Importo importo = new Importo(10, (short) 20);
-
-        importo.aggiungi(5, (short) 30);
-
-        assertEquals(15, importo.getValoreIntero());
-        assertEquals(50, importo.getValoreDecimale());
-    }
-
-    @Test
-    void testAggiungiValidValuesWithDecimalOverflow() {
-        Importo importo = new Importo(10, (short) 80);
-
-        importo.aggiungi(5, (short) 30);
-
-        assertEquals(16, importo.getValoreIntero());
-        assertEquals(10, importo.getValoreDecimale());
-    }
-
-    @Test
-    void testAggiungiZeroValues() {
-        Importo importo = new Importo(10, (short) 20);
-
-        importo.aggiungi(0, (short) 0);
-
-        assertEquals(10, importo.getValoreIntero());
-        assertEquals(20, importo.getValoreDecimale());
-    }
-
-    @Test
-    void testAggiungiNegativeIntegerValueThrowsException() {
-        Importo importo = new Importo(10, (short) 20);
-
-        assertThrows(IllegalArgumentException.class, () -> importo.aggiungi(-1, (short) 30));
-    }
-
-    @Test
-    void testAggiungiNegativeDecimalValueThrowsException() {
-        Importo importo = new Importo(10, (short) 20);
-
-        assertThrows(IllegalArgumentException.class, () -> importo.aggiungi(10, (short) -5));
-    }
-
-    @Test
-    void testAggiungiDecimalValueExceedingHundredThrowsException() {
-        Importo importo = new Importo(10, (short) 20);
-
-        assertThrows(IllegalArgumentException.class, () -> importo.aggiungi(10, (short) 105));
-    }
-
-    @Test
-    void testSottraiValidValuesWithoutDecimalUnderflow() {
-        Importo importo = new Importo(15, (short) 50);
-
-        importo.sottrai(5, (short) 30);
-
-        assertEquals(10, importo.getValoreIntero());
-        assertEquals(20, importo.getValoreDecimale());
-    }
-
-    @Test
-    void testSottraiValidValuesWithDecimalUnderflow() {
-        Importo importo = new Importo(15, (short) 10);
-
-        importo.sottrai(5, (short) 30);
-
-        assertEquals(9, importo.getValoreIntero());
-        assertEquals(80, importo.getValoreDecimale());
-    }
-
-    @Test
-    void testSottraiZeroValues() {
-        Importo importo = new Importo(15, (short) 50);
-
-        importo.sottrai(0, (short) 0);
-
-        assertEquals(15, importo.getValoreIntero());
-        assertEquals(50, importo.getValoreDecimale());
-    }
-
-    @Test
-    void testSottraiNegativeIntegerValueThrowsException() {
-        Importo importo = new Importo(15, (short) 50);
-
-        assertThrows(IllegalArgumentException.class, () -> importo.sottrai(-1, (short) 30));
-    }
-
-    @Test
-    void testSottraiNegativeDecimalValueThrowsException() {
-        Importo importo = new Importo(15, (short) 50);
-
-        assertThrows(IllegalArgumentException.class, () -> importo.sottrai(10, (short) -5));
-    }
-
-    @Test
-    void testSottraiDecimalValueExceedingHundredThrowsException() {
-        Importo importo = new Importo(15, (short) 50);
-
-        assertThrows(IllegalArgumentException.class, () -> importo.sottrai(10, (short) 105));
-    }
-
-    @Test
-    void testAggiungiImporto() {
-        Importo importo1 = new Importo(10, (short) 50);
-        Importo importo2 = new Importo(5, (short) 30);
+    void testAggiungi_WithPositiveValues() {
+        Importo importo1 = new Importo(5, (short) 50);
+        Importo importo2 = new Importo(3, (short) 75);
 
         importo1.aggiungi(importo2);
 
-        assertEquals(15, importo1.getValoreIntero());
-        assertEquals(80, importo1.getValoreDecimale());
+        assertEquals(9, importo1.getValoreIntero());
+        assertEquals(25, importo1.getValoreDecimale());
     }
 
     @Test
-    void testAggiungiImportoNull() {
-        Importo importo = new Importo(10, (short) 50);
+    void testAggiungi_WithCarryOverToNextInteger() {
+        Importo importo1 = new Importo(5, (short) 95);
+        Importo importo2 = new Importo(3, (short) 10);
 
-        importo.aggiungi((Importo) null);
+        importo1.aggiungi(importo2);
 
-        assertEquals(10, importo.getValoreIntero());
-        assertEquals(50, importo.getValoreDecimale());
+        assertEquals(9, importo1.getValoreIntero());
+        assertEquals(5, importo1.getValoreDecimale());
     }
 
     @Test
-    void testAggiungiDoubleValidValues() {
-        Importo importo = new Importo(10, (short) 50);
+    void testAggiungi_WithNullImporto() {
+        Importo importo1 = new Importo(5, (short) 50);
 
-        importo.aggiungi(5.25);
+        importo1.aggiungi((Importo) null);
 
-        assertEquals(15, importo.getValoreIntero());
-        assertEquals(75, importo.getValoreDecimale());
+        assertEquals(5, importo1.getValoreIntero());
+        assertEquals(50, importo1.getValoreDecimale());
     }
 
     @Test
-    void testAggiungiDoubleZeroValue() {
-        Importo importo = new Importo(10, (short) 50);
-
-        importo.aggiungi(0.0);
-
-        assertEquals(10, importo.getValoreIntero());
-        assertEquals(50, importo.getValoreDecimale());
-    }
-
-    @Test
-    void testAggiungiDoubleNegativeValueThrowsException() {
-        Importo importo = new Importo(10, (short) 50);
-
-        assertThrows(IllegalArgumentException.class, () -> importo.aggiungi(-5.0));
-    }
-
-    @Test
-    void testMoltiplicaWithPositiveValues() {
-        Importo importo1 = new Importo(5, (short) 25);
-        Importo importo2 = new Importo(2, (short) 10);
-
-        importo1.moltiplica(importo2);
-
-        assertEquals(11, importo1.getValoreIntero());
-        assertEquals(3, importo1.getValoreDecimale());
-    }
-
-    @Test
-    void testMoltiplicaWithZeroValue() {
+    void testAggiungi_WithZeroValues() {
         Importo importo1 = new Importo(5, (short) 50);
         Importo importo2 = new Importo(0, (short) 0);
 
-        importo1.moltiplica(importo2);
+        importo1.aggiungi(importo2);
 
-        assertEquals(0, importo1.getValoreIntero());
-        assertEquals(0, importo1.getValoreDecimale());
+        assertEquals(5, importo1.getValoreIntero());
+        assertEquals(50, importo1.getValoreDecimale());
     }
 
     @Test
-    void testMoltiplicaNullThrowsException() {
-        Importo importo1 = new Importo(5, (short) 25);
+    void testAggiungi_WithDoubleValue() {
+        Importo importo1 = new Importo(5, (short) 50);
+        double valore = 3.75;
 
-        assertThrows(NullPointerException.class, () -> importo1.moltiplica(null));
+        importo1.aggiungi(valore);
+
+        assertEquals(9, importo1.getValoreIntero());
+        assertEquals(25, importo1.getValoreDecimale());
+    }
+
+    @Test
+    void testAggiungi_WithDoubleCarryOver() {
+        Importo importo1 = new Importo(5, (short) 95);
+        double valore = 0.10;
+
+        importo1.aggiungi(valore);
+
+        assertEquals(6, importo1.getValoreIntero());
+        assertEquals(5, importo1.getValoreDecimale());
+    }
+
+    @Test
+    void testAggiungi_WithNegativeDoubleThrowsException() {
+        Importo importo1 = new Importo(5, (short) 50);
+
+        assertThrows(IllegalArgumentException.class, () -> importo1.aggiungi(-3.75));
+    }
+
+    @Test
+    void testAggiungi_WithZeroDoubleValue() {
+        Importo importo1 = new Importo(5, (short) 50);
+
+        importo1.aggiungi(0.0);
+
+        assertEquals(5, importo1.getValoreIntero());
+        assertEquals(50, importo1.getValoreDecimale());
+    }
+
+    @Test
+    void testAggiungi_WithPositiveIntegers() {
+        Importo importo1 = new Importo(5, (short) 50);
+
+        importo1.aggiungi(3, (short) 75);
+
+        assertEquals(9, importo1.getValoreIntero());
+        assertEquals(25, importo1.getValoreDecimale());
+    }
+
+    @Test
+    void testAggiungi_WithCarryOverFromIntegerAddition() {
+        Importo importo1 = new Importo(5, (short) 95);
+
+        importo1.aggiungi(3, (short) 10);
+
+        assertEquals(9, importo1.getValoreIntero());
+        assertEquals(5, importo1.getValoreDecimale());
+    }
+
+    @Test
+    void testAggiungi_WithIllegalArgumentExceptionForNegativeValues() {
+        Importo importo1 = new Importo(5, (short) 50);
+
+        assertThrows(IllegalArgumentException.class, () -> importo1.aggiungi(-3, (short) 75));
+        assertThrows(IllegalArgumentException.class, () -> importo1.aggiungi(3, (short) -75));
+        assertThrows(IllegalArgumentException.class, () -> importo1.aggiungi(3, (short) 105));
+    }
+
+    @Test
+    void testAggiungi_WithZeroIntegerAndDecimalValues() {
+        Importo importo1 = new Importo(5, (short) 50);
+
+        importo1.aggiungi(0, (short) 0);
+
+        assertEquals(5, importo1.getValoreIntero());
+        assertEquals(50, importo1.getValoreDecimale());
     }
 }

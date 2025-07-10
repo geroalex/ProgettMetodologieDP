@@ -27,8 +27,6 @@ public class MensilitaStipendio extends Movimento {
         this.aggiungiTag(new Tags("Stipendio", 1));
     }
 
-    public void impostaPagato(boolean statoPagato) { this.statoPagato = statoPagato;}
-
     public boolean statoPagato() {
         return statoPagato;
     }

@@ -10,7 +10,7 @@ package it.unicam.cs.mpgc.jbudget.valori;
  * senza avere possibili errori di precisione dei valori in virgola mobile
  * @author Alessandro Pisciarelli 119161
  */
-public class Importo {
+public class Importo implements Comparable<Importo> {
 
     private long valoreIntero;
     private short valoreDecimale;
@@ -72,15 +72,16 @@ public class Importo {
      * @throws IllegalArgumentException se valoreIntero è negativo, valoreDecimale è negativo o
      *                                  valoreDecimale supera 100
      */
-    public void sottrai(long valoreIntero, short valoreDecimale){
+    public boolean sottrai(long valoreIntero, short valoreDecimale){
         if(valoreIntero < 0 || valoreDecimale < 0 || valoreDecimale > 100) throw new IllegalArgumentException("Valori non ammessi");
-        if(valoreIntero == 0 && valoreDecimale == 0) return;
+        if(valoreIntero == 0 && valoreDecimale == 0) return false;
         this.valoreIntero -= valoreIntero;
         this.valoreDecimale = (short) (this.valoreDecimale - valoreDecimale);
         if(this.valoreDecimale < 0) {
             this.valoreDecimale += 100;
             this.valoreIntero--;
         }
+        return true;
     }
 
     /**
@@ -104,9 +105,9 @@ public class Importo {
      *
      * @param importo l'oggetto Importo da sottrarre; se null, l'operazione viene ignorata
      */
-    public void sottrai(Importo importo){
-        if(importo == null) return;
-        sottrai(importo.getValoreIntero(), importo.getValoreDecimale());
+    public boolean sottrai(Importo importo){
+        if(importo == null) return false;
+        return sottrai(importo.getValoreIntero(), importo.getValoreDecimale());
     }
 
     /**
@@ -131,10 +132,10 @@ public class Importo {
      * @param valore il valore in formato double da sottrarre; deve essere maggiore o uguale a 0
      * @throws IllegalArgumentException se il parametro valore è negativo
      */
-    public void sottrai(double valore){
+    public boolean sottrai(double valore){
         if(valore < 0) throw new IllegalArgumentException("Valore negativo");
-        if(valore == 0) return;
-        sottrai((long) valore, (short) Math.round((valore - (long) valore) * 100));
+        if(valore == 0) return false;
+        return sottrai((long) valore, (short) Math.round((valore - (long) valore) * 100));
     }
 
     /**
@@ -189,4 +190,22 @@ public class Importo {
         return valoreIntero + (valoreDecimale / 100.0);
     }
 
+    /**
+     * Compares this {@code Importo} object with the specified {@code Importo} object
+     * for order. Returns a negative integer, zero, or a positive integer as
+     * this object is less than, equal to, or greater than the specified object.
+     * The comparison is based on the monetary value represented by the object.
+     *
+     * @param o the {@code Importo} object to be compared. Must not be null.
+     * @return a negative integer, zero, or a positive integer as this object
+     *         is less than, equal to, or greater than the specified object.
+     * @throws NullPointerException if the specified {@code Importo} is null.
+     */
+    @Override
+    public int compareTo(Importo o) {
+        if(o == null) throw new NullPointerException("Importo non valido");
+        if(this.getValoreDouble() > o.getValoreDouble()) return 1;
+        if(this.getValoreDouble() == o.getValoreDouble()) return 0;
+        return -1;
+    }
 }
