@@ -208,4 +208,12 @@ public class Importo implements Comparable<Importo> {
         if(this.getValoreDouble() == o.getValoreDouble()) return 0;
         return -1;
     }
+
+    public Importo diviso(double quanto) {
+        return new Importo(getValoreDouble() / quanto);
+    }
+
+    public Importo calcolaPercentuale(float tassoInteresse) {
+        return new Importo(getValoreDouble() * (tassoInteresse / 100));
+    }
 }

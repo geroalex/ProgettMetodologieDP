@@ -7,9 +7,6 @@ import java.util.ArrayList;
 
 public class Stipendio extends MovimentiProgrammati{
 
-    //private final LocalDate dataAssunzione;
-    private LocalDate annoCorrente;
-
     private ArrayList<MensilitaStipendio> mensilitaAnnoCorrente;
     private MensilitaStipendio tredicesima;
 

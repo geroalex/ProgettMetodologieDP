@@ -8,6 +8,7 @@ public abstract class MovimentiProgrammati {
 
     private Importo importo;
     private LocalDate quando;
+    protected LocalDate annoCorrente;
 
     public MovimentiProgrammati(Importo importo){
         this(importo, LocalDate.now());
@@ -15,6 +16,7 @@ public abstract class MovimentiProgrammati {
 
     public MovimentiProgrammati(Importo importo, LocalDate quando){
         this.importo = importo;
+        this.quando = quando;
     }
 
     public void aumenta(Importo importo) {
@@ -25,7 +27,6 @@ public abstract class MovimentiProgrammati {
     public void diminuisci(Importo importo){
         this.importo.sottrai(importo);
     }
-
 
     public LocalDate getQuando() { return quando; }
     public void setQuando(LocalDate quando) { this.quando = quando;}
