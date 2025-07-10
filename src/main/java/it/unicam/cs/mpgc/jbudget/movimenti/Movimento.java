@@ -60,10 +60,8 @@ public abstract class Movimento implements Comparable<Movimento>{
                 return;
             }
             int maxIndex = 0;
-            for (int i = 1; i < tagList.size(); i++) {
-                if (tagList.get(i).compareTo(tagList.get(maxIndex)) > 0)
-                    maxIndex = i;
-            }
+            for (int i = 1; i < tagList.size(); i++)
+                if (tagList.get(i).compareTo(tagList.get(maxIndex)) > 0) maxIndex = i;
             tagPiuImportante = maxIndex;
         } else {
             tagList.remove(tag);

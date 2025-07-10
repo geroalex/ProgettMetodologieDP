@@ -4,7 +4,7 @@ public class Tags implements Comparable<Tags>{
 
     private final String tipoTag;
     private  String descrizioneTag;
-    private final int pesoTag;
+    private  int pesoTag;
 
     public Tags(String tipoTag, int pesoTag){
         this(tipoTag, "Descrizione vuota", pesoTag);
@@ -14,6 +14,18 @@ public class Tags implements Comparable<Tags>{
         this.tipoTag = tipoTag;
         this.pesoTag = pesoTag;
         this.descrizioneTag = descrizioneTag;
+    }
+
+    public void aumentaPeso(int diQuanto){
+        pesoTag += diQuanto;
+    }
+
+    public void riduciPeso(int diQuanto){
+        pesoTag -= diQuanto;
+    }
+
+    public void impostaPeso(int aQuanto){
+        pesoTag = aQuanto;
     }
 
     public String getTipoTag() {
