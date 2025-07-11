@@ -8,15 +8,15 @@ public class MovimentoRata extends Movimento {
 
     private final Mutuo mutuoDiAppartenenza;
     private final float tassoInteresse;
-    private final LocalDate data;
+    //private final LocalDate data;
 
 
     public MovimentoRata(LocalDate data, Importo importo, Mutuo mutuoDiAppartenenza, float tassoInteresse) {
-        super(importo);
+        super(importo, data);
         this.mutuoDiAppartenenza = mutuoDiAppartenenza;
         this.aggiungiTag(new Tags("Rata", 1));
         this.tassoInteresse = tassoInteresse;
-        this.data = data;
+        //this.data = data;
     }
 
     public Importo getValoreConInteressi(){
@@ -31,8 +31,8 @@ public class MovimentoRata extends Movimento {
     public float getTassoInteresse() {
         return tassoInteresse;
     }
-    public LocalDate getData() {
-        return data;
-    }
+    //public LocalDate getData() {
+        //return data;
+    //}
 
 }

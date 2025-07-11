@@ -2,6 +2,7 @@ package it.unicam.cs.mpgc.jbudget.movimenti;
 
 import it.unicam.cs.mpgc.jbudget.valori.Importo;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public abstract class Movimento implements Comparable<Movimento>{
@@ -11,13 +12,24 @@ public abstract class Movimento implements Comparable<Movimento>{
     private ArrayList<Tags> tagList;
     private int tagPiuImportante;
     private boolean contabilizzato;
-    
+    private LocalDate dataMovimento;
+
+    public Movimento(){
+        this(new Importo(0));
+    }
+
     public Movimento(Importo importo){
-        this.importo = importo;
+        this(importo, LocalDate.now());
+    }
+
+    public Movimento(Importo importo, LocalDate dataMovimento){
+        if(importo == null) this.importo = new Importo(0);
+        else this.importo = importo;
         isUscita = this.importo.getValoreIntero() < 0;
         tagList = new ArrayList<>();
         tagPiuImportante = 0;
         contabilizzato = false;
+        this.dataMovimento = dataMovimento;
     }
 
     public void contabilizza() { contabilizzato = true; }
@@ -27,13 +39,23 @@ public abstract class Movimento implements Comparable<Movimento>{
     public Importo getImporto() {
         return importo;
     }
+    public void aggiungiImporto(Importo importo) { this.importo.aggiungi(importo); }
+    public void sottraiImporto(Importo importo) { this.importo.sottrai(importo); }
+    public LocalDate getDataMovimento() {
+        return dataMovimento;
+    }
+    public void setDataMovimento(LocalDate dataMovimento) {
+        this.dataMovimento = dataMovimento;
+    }
+    public void impostaImporto(Importo importo) {
+        this.importo = importo;
+    }
     public boolean isUscita() {
         return isUscita;
     }
     public ArrayList<Tags> getTagList() {
         return tagList;
     }
-
     /**
      * Aggiungi un tag alla lista dei tags
      * @param tag
@@ -50,7 +72,6 @@ public abstract class Movimento implements Comparable<Movimento>{
         if (tag.compareTo(tagList.get(tagPiuImportante)) > 0)
             tagPiuImportante = tagList.size() - 1;
     }
-
     /**
      * Rimuovi un tag dalla lista dei tags
      * @param tag
