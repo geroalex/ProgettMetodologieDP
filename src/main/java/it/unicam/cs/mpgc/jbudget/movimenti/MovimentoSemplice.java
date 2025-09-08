@@ -4,8 +4,12 @@ import it.unicam.cs.mpgc.jbudget.valori.Importo;
 
 public class MovimentoSemplice extends Movimento{
 
-    MovimentoSemplice(Importo importo) {
+    public MovimentoSemplice(Importo importo) {
         super(importo);
+    }
+
+    public MovimentoSemplice(Importo importo, String tipoMovimento) {
+        super(importo, tipoMovimento);
     }
 
 

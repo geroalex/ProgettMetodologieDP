@@ -1,5 +1,6 @@
 package it.unicam.cs.mpgc.jbudget.movimenti;
 
+import it.unicam.cs.mpgc.jbudget.gestione.ContoCorrente;
 import it.unicam.cs.mpgc.jbudget.valori.Importo;
 
 import java.time.LocalDate;
@@ -12,6 +13,8 @@ public class Mutuo extends MovimentiProgrammati{
     private ArrayList<MovimentoRata> rate;
     private final int numeroRate;
     private final Importo importoMensile;
+    private int ratePagate;
+
 
     /**
      * Crea un mutuo con i seguenti parametri:
@@ -42,15 +45,40 @@ public class Mutuo extends MovimentiProgrammati{
         this.naturaMutuo = naturaMutuo;
         this.tassoInteresse = tassoInteresse;
         this.numeroRate = numeroRate;
+        ratePagate = 0;
         this.importoMensile = importoMutuo.diviso(numeroRate);
         rate = new ArrayList<>();
         creaRate();
+    }
+
+    public boolean pagaRata(ContoCorrente cc){
+        if(ratePagate >= numeroRate) return false;
+        if(rate.get(ratePagate).isContabilizzato()) {
+            ratePagate++;
+            return false;
+        }
+        rate.get(ratePagate).contabilizza(cc);
+        ratePagate++;
+        return true;
+    }
+
+    private void contaRateDaPagare(){
+        ratePagate = 0;
+        for(MovimentoRata r : rate)
+            if(r.isContabilizzato()) ratePagate++;
+
+
+    }
+
+    public int getRatePagate(){
+        return ratePagate;
     }
 
     private void creaRate(){
 
         for(int i = 0; i < numeroRate; i++)
             rate.add(new MovimentoRata(getQuando().plusMonths(i), importoMensile, this, tassoInteresse));
+        MovimentoRata.resetConteggioRate();
 
     }
 

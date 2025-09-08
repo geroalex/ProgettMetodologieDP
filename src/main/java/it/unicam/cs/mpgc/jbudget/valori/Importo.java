@@ -74,7 +74,7 @@ public class Importo implements Comparable<Importo> {
      */
     public boolean sottrai(long valoreIntero, short valoreDecimale){
         if(valoreIntero < 0 || valoreDecimale < 0 || valoreDecimale > 100) throw new IllegalArgumentException("Valori non ammessi");
-        if(valoreIntero == 0 && valoreDecimale == 0) return false;
+        //if(valoreIntero == 0 && valoreDecimale == 0) return false;
         this.valoreIntero -= valoreIntero;
         this.valoreDecimale = (short) (this.valoreDecimale - valoreDecimale);
         if(this.valoreDecimale < 0) {

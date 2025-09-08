@@ -8,16 +8,22 @@ public class MovimentoRata extends Movimento {
 
     private final Mutuo mutuoDiAppartenenza;
     private final float tassoInteresse;
+    private int numeroRata;
+    private static int conteggioRate;
     //private final LocalDate data;
 
 
     public MovimentoRata(LocalDate data, Importo importo, Mutuo mutuoDiAppartenenza, float tassoInteresse) {
-        super(importo, data);
+        super(importo, data, "Rata n." + conteggioRate);
+        numeroRata = conteggioRate;
         this.mutuoDiAppartenenza = mutuoDiAppartenenza;
         this.aggiungiTag(new Tags("Rata", 1));
         this.tassoInteresse = tassoInteresse;
         //this.data = data;
+        conteggioRate++;
     }
+
+    public int getNumeroRata() { return numeroRata; }
 
     public Importo getValoreConInteressi(){
         Importo interessi = getImporto().calcolaPercentuale(tassoInteresse);
@@ -25,6 +31,9 @@ public class MovimentoRata extends Movimento {
         return interessi;
     }
 
+    public static void resetConteggioRate() {
+        conteggioRate = 0;
+    }
     public Mutuo getMutuoDiAppartenenza() {
         return mutuoDiAppartenenza;
     }

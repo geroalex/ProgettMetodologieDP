@@ -20,7 +20,7 @@ public class MensilitaStipendio extends Movimento {
     }
 
     public MensilitaStipendio(Importo importo, LocalDate dataStipendio, Stipendio stipendioDiAppartenenza) {
-        super(importo, dataStipendio);
+        super(importo, dataStipendio, "Stipendio");
         this.dataStipendio = dataStipendio;
         this.stipendioDiAppartenenza = stipendioDiAppartenenza;
         statoPagato = false;

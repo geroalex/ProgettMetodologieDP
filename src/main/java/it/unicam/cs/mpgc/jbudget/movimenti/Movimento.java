@@ -1,5 +1,6 @@
 package it.unicam.cs.mpgc.jbudget.movimenti;
 
+import it.unicam.cs.mpgc.jbudget.gestione.ContoCorrente;
 import it.unicam.cs.mpgc.jbudget.valori.Importo;
 
 import java.time.LocalDate;
@@ -7,6 +8,7 @@ import java.util.ArrayList;
 
 public abstract class Movimento implements Comparable<Movimento>{
 
+    private String tipoMovimento;
     private Importo importo;
     private boolean isUscita;
     private ArrayList<Tags> tagList;
@@ -14,15 +16,20 @@ public abstract class Movimento implements Comparable<Movimento>{
     private boolean contabilizzato;
     private LocalDate dataMovimento;
 
-    public Movimento(){
-        this(new Importo(0));
-    }
-
+    @Deprecated
     public Movimento(Importo importo){
-        this(importo, LocalDate.now());
+        this(importo, "Movimento senza titolo");
     }
 
-    public Movimento(Importo importo, LocalDate dataMovimento){
+    public Movimento(String tipoMovimento){
+        this(new Importo(0), tipoMovimento);
+    }
+
+    public Movimento(Importo importo, String tipoMovimento){
+        this(importo, LocalDate.now(), tipoMovimento);
+    }
+
+    public Movimento(Importo importo, LocalDate dataMovimento, String tipoMovimento){
         if(importo == null) this.importo = new Importo(0);
         else this.importo = importo;
         isUscita = this.importo.getValoreIntero() < 0;
@@ -30,9 +37,22 @@ public abstract class Movimento implements Comparable<Movimento>{
         tagPiuImportante = 0;
         contabilizzato = false;
         this.dataMovimento = dataMovimento;
+        this.tipoMovimento = tipoMovimento;
     }
 
-    public void contabilizza() { contabilizzato = true; }
+    public boolean contabilizza(ContoCorrente conto) {
+        if(!isUscita) {
+            contabilizzato = true;
+            conto.versa(this.importo);
+            return true;
+        }
+        if(conto.preleva(this.importo)) {
+            contabilizzato = true;
+            return true;
+        }
+        return false;
+    }
+
     public boolean isContabilizzato(){
         return contabilizzato;
     }
@@ -95,5 +115,26 @@ public abstract class Movimento implements Comparable<Movimento>{
     public int compareTo(Movimento o) {
         return o.getTagList().get(tagPiuImportante).compareTo(getTagList().get(tagPiuImportante));
     }
-    
+
+    /**
+     * Si usa solo per movimenti il cui movimento finanziario è gia completato, e si vuole quindi
+     * segnare che il denaro è stato ricevuto/inviato
+     */
+    public void contabilizzaFormalmente() {
+        contabilizzato = true;
+    }
+
+    public String getTipoMovimento() {
+        return tipoMovimento;
+    }
+    public void setTipoMovimento(String tipoMovimento) {
+        this.tipoMovimento = tipoMovimento;
+    }
+
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+
+        return sb.toString();
+    }
+
 }

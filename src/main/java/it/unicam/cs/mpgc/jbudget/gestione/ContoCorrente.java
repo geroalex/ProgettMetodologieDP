@@ -7,9 +7,14 @@ import java.util.ArrayList;
 
 public class ContoCorrente {
 
+    
     private ArrayList<Movimento> movimenti;
     private Importo saldo;
     private final String iban;
+
+    public ContoCorrente() {
+        this("IT600000000000000000");
+    }   
 
     public ContoCorrente(String iban) {
         this.iban = iban;
@@ -49,6 +54,19 @@ public class ContoCorrente {
         return movimenti.remove(movimento);
     }
 
-
+    public boolean sposta(ContoCorrente destinazione, Importo quanto) throws NullPointerException {
+        if (destinazione == null) throw new NullPointerException();
+        if (quanto == null) throw new NullPointerException();
+        if (quanto.getValoreIntero() >= saldo.getValoreIntero()) return false;
+        if (!preleva(quanto)) return false;
+        destinazione.versa(quanto);
+        return true;
+    }
+    
+    public ArrayList<Movimento> getMovimenti(){
+        return movimenti;
+    }
+    public Importo getSaldo(){ return saldo;}
+    public String getIban(){ return iban;}
 
 }
