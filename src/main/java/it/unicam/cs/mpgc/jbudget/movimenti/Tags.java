@@ -47,4 +47,8 @@ public class Tags implements Comparable<Tags>{
         if(this.pesoTag == o.pesoTag) return 0;
         return -1;
     }
+    public String toString(){
+        return "Tipo: " + tipoTag + " Descrizione: " + descrizioneTag + " Peso: " + pesoTag;
+    }
+
 }

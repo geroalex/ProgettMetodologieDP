@@ -70,7 +70,7 @@ public class MovimentoRataTest {
         MovimentoRata movimentoRata = new MovimentoRata(data, importo, mutuo, tassoInteresse);
         Importo expectedImporto = new Importo(1050L, (short) 0); // 1000 + 5% = 1050.00
 
-        Importo actualImporto = movimentoRata.getValoreConInteressi();
+        Importo actualImporto = movimentoRata.getImporto();
 
         assertEquals(expectedImporto.getValoreDouble(), actualImporto.getValoreDouble(), 0.01);
     }

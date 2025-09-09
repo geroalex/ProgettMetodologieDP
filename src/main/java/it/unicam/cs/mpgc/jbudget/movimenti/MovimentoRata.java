@@ -10,7 +10,6 @@ public class MovimentoRata extends Movimento {
     private final float tassoInteresse;
     private int numeroRata;
     private static int conteggioRate;
-    //private final LocalDate data;
 
 
     public MovimentoRata(LocalDate data, Importo importo, Mutuo mutuoDiAppartenenza, float tassoInteresse) {
@@ -19,16 +18,17 @@ public class MovimentoRata extends Movimento {
         this.mutuoDiAppartenenza = mutuoDiAppartenenza;
         this.aggiungiTag(new Tags("Rata", 1));
         this.tassoInteresse = tassoInteresse;
-        //this.data = data;
+        calcValoreConInteressi();
         conteggioRate++;
     }
 
     public int getNumeroRata() { return numeroRata; }
 
-    public Importo getValoreConInteressi(){
+    private void calcValoreConInteressi(){
         Importo interessi = getImporto().calcolaPercentuale(tassoInteresse);
         interessi.aggiungi(getImporto());
-        return interessi;
+        this.impostaImporto(interessi.getOpposto());
+        setUscita(true);
     }
 
     public static void resetConteggioRate() {
@@ -43,5 +43,15 @@ public class MovimentoRata extends Movimento {
     //public LocalDate getData() {
         //return data;
     //}
-
+    public String toString(){
+        return getTipoMovimento() +
+                " " +
+                getImporto().toString() +
+                " " +
+                getDataMovimento().toString() +
+                " " +
+                "Contabilizzato: " +
+                isContabilizzato() + " " +
+                "Tags: " + getTagList().toString();
+    }
 }

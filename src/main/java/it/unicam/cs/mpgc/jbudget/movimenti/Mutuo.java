@@ -52,12 +52,13 @@ public class Mutuo extends MovimentiProgrammati{
     }
 
     public boolean pagaRata(ContoCorrente cc){
+        //TODO Ritornare qua
         if(ratePagate >= numeroRate) return false;
         if(rate.get(ratePagate).isContabilizzato()) {
             ratePagate++;
             return false;
         }
-        rate.get(ratePagate).contabilizza(cc);
+        //rate.get(ratePagate).contabilizza(cc);
         ratePagate++;
         return true;
     }
@@ -84,6 +85,18 @@ public class Mutuo extends MovimentiProgrammati{
 
     public ArrayList<MovimentoRata> getRate(){
         return rate;
+    }
+
+    public String getNaturaMutuo() {
+        return naturaMutuo;
+    }
+
+    public String toString(){
+        return "Importo iniziale: " + getImporto() +
+                "\n Tasso d'interesse: " + tassoInteresse +
+                "\n Numero di rate: " + numeroRate +
+                "\n Natura del mutuo: " + naturaMutuo +
+                "\n Rate: " + rate.toString();
     }
 
 }

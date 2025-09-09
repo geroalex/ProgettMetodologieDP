@@ -1,6 +1,6 @@
 package it.unicam.cs.mpgc.jbudget.gestione;
 
-import it.unicam.cs.mpgc.jbudget.movimenti.Movimento;
+import it.unicam.cs.mpgc.jbudget.movimenti.*;
 import it.unicam.cs.mpgc.jbudget.valori.Importo;
 
 import java.util.ArrayList;
@@ -9,6 +9,7 @@ public class ContoCorrente {
 
     
     private ArrayList<Movimento> movimenti;
+    private ArrayList<MovimentiProgrammati> mProgrammati;
     private Importo saldo;
     private final String iban;
 
@@ -19,7 +20,39 @@ public class ContoCorrente {
     public ContoCorrente(String iban) {
         this.iban = iban;
         movimenti = new ArrayList<>();
+        mProgrammati = new ArrayList<>();
         saldo = new Importo(0.0);
+    }
+
+    public void creaMovimentoProgrammato(MovimentiProgrammati mProg){
+        mProgrammati.add(mProg);
+        if(mProg instanceof Mutuo){
+            Mutuo mutuo = (Mutuo) mProg;
+            movimenti.addAll(mutuo.getRate());
+        }
+
+        if(mProg instanceof Stipendio){
+            Stipendio stipendio = (Stipendio) mProg;
+            movimenti.addAll(stipendio.getMensilitaAnnoCorrente());
+            movimenti.add(stipendio.getTredicesima());
+        }
+
+    }
+
+    public boolean contabilizza(int numeroMovimento){
+        Movimento m = movimenti.get(numeroMovimento);
+        if(m.isContabilizzato()) return false;
+        Importo importo = m.getImporto();
+        if(!m.isUscita()) {
+            this.versa(importo);
+            m.contabilizza();
+            return true;
+        }
+
+        if(!this.preleva(importo.valoreAssoluto())) return false;
+        m.contabilizza();
+        return true;
+
     }
 
     /**
@@ -54,15 +87,21 @@ public class ContoCorrente {
         return movimenti.remove(movimento);
     }
 
-    public boolean sposta(ContoCorrente destinazione, Importo quanto) throws NullPointerException {
-        if (destinazione == null) throw new NullPointerException();
-        if (quanto == null) throw new NullPointerException();
-        if (quanto.getValoreIntero() >= saldo.getValoreIntero()) return false;
-        if (!preleva(quanto)) return false;
+    public boolean sposta(ContoCorrente destinazione, Importo quanto) throws NullPointerException{
+        if(destinazione == null) throw new NullPointerException();
+        if(quanto == null) throw new NullPointerException();
+        if(!preleva(quanto)) return false;
         destinazione.versa(quanto);
         return true;
     }
-    
+
+    public ArrayList<Movimento> getMovimentiContabilizzati(){
+        ArrayList<Movimento> mContabilizzati = new ArrayList<>();
+        for(Movimento m : movimenti)
+            if(m.isContabilizzato()) mContabilizzati.add(m);
+        return mContabilizzati;
+    }
+    public ArrayList<MovimentiProgrammati> getMovimentiProgrammati(){ return mProgrammati;}
     public ArrayList<Movimento> getMovimenti(){
         return movimenti;
     }

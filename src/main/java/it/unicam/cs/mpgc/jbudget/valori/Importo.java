@@ -75,6 +75,8 @@ public class Importo implements Comparable<Importo> {
     public boolean sottrai(long valoreIntero, short valoreDecimale){
         if(valoreIntero < 0 || valoreDecimale < 0 || valoreDecimale > 100) throw new IllegalArgumentException("Valori non ammessi");
         //if(valoreIntero == 0 && valoreDecimale == 0) return false;
+        if(valoreIntero > this.valoreIntero) return false;
+        if(valoreIntero == this.valoreIntero && valoreDecimale > this.valoreDecimale) return false;
         this.valoreIntero -= valoreIntero;
         this.valoreDecimale = (short) (this.valoreDecimale - valoreDecimale);
         if(this.valoreDecimale < 0) {
@@ -82,6 +84,10 @@ public class Importo implements Comparable<Importo> {
             this.valoreIntero--;
         }
         return true;
+    }
+
+    public Importo getOpposto(){
+        return new Importo(-this.valoreIntero, (short) this.valoreDecimale);
     }
 
     /**
@@ -216,4 +222,13 @@ public class Importo implements Comparable<Importo> {
     public Importo calcolaPercentuale(float tassoInteresse) {
         return new Importo(getValoreDouble() * (tassoInteresse / 100));
     }
+
+    public Importo valoreAssoluto(){
+        return new Importo(Math.abs(getValoreDouble()));
+    }
+
+    public String toString(){
+        return valoreIntero + "." + valoreDecimale;
+    }
+
 }
