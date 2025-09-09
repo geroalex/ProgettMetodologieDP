@@ -72,20 +72,29 @@ public class Importo implements Comparable<Importo> {
      * @throws IllegalArgumentException se valoreIntero è negativo, valoreDecimale è negativo o
      *                                  valoreDecimale supera 100
      */
-    public boolean sottrai(long valoreIntero, short valoreDecimale){
-        if(valoreIntero < 0 || valoreDecimale < 0 || valoreDecimale > 100) throw new IllegalArgumentException("Valori non ammessi");
-        //if(valoreIntero == 0 && valoreDecimale == 0) return false;
-        if(valoreIntero > this.valoreIntero) return false;
-        if(valoreIntero == this.valoreIntero && valoreDecimale > this.valoreDecimale) return false;
-        this.valoreIntero -= valoreIntero;
-        this.valoreDecimale = (short) (this.valoreDecimale - valoreDecimale);
-        if(this.valoreDecimale < 0) {
-            this.valoreDecimale += 100;
-            this.valoreIntero--;
+    public boolean sottrai(long valoreIntero, short valoreDecimale) {
+        // Validazione: centesimi 0..99 (100 non ammesso)
+        if (valoreIntero < 0 || valoreDecimale < 0 || valoreDecimale >= 100) {
+            throw new IllegalArgumentException("Valori non ammessi");
         }
+
+        long thisTotCents = Math.addExact(Math.multiplyExact(this.valoreIntero, 100L), this.valoreDecimale);
+        long subTotCents  = Math.addExact(Math.multiplyExact(valoreIntero, 100L), valoreDecimale);
+
+        // Decidere la semantica: false se nessuna modifica, oppure true comunque.
+        if (subTotCents == 0) {
+            return false;
+        }
+        if (subTotCents > thisTotCents) {
+            return false;
+        }
+
+        long diff = thisTotCents - subTotCents;
+        this.valoreIntero   = diff / 100L;
+        this.valoreDecimale = (short) (diff % 100L);
         return true;
     }
-
+    
     public Importo getOpposto(){
         return new Importo(-this.valoreIntero, (short) this.valoreDecimale);
     }
