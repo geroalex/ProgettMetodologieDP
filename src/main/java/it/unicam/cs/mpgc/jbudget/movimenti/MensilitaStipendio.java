@@ -15,12 +15,12 @@ public class MensilitaStipendio extends Movimento {
     private boolean statoPagato;
     private final Stipendio stipendioDiAppartenenza;
 
-    public MensilitaStipendio(Importo importo, Stipendio stipendioDiAppartenenza) {
-        this(importo, LocalDate.now(), stipendioDiAppartenenza);
+    public MensilitaStipendio(Importo importo, Stipendio stipendioDiAppartenenza, boolean tredicesima) {
+        this(importo, LocalDate.now(), stipendioDiAppartenenza, tredicesima);
     }
 
-    public MensilitaStipendio(Importo importo, LocalDate dataStipendio, Stipendio stipendioDiAppartenenza) {
-        super(importo, dataStipendio, "Stipendio");
+    public MensilitaStipendio(Importo importo, LocalDate dataStipendio, Stipendio stipendioDiAppartenenza, boolean tredicesima) {
+        super(importo, dataStipendio, tredicesima ? "Stipendio Tredicesima" : "Stipendio");
         this.dataStipendio = dataStipendio;
         this.stipendioDiAppartenenza = stipendioDiAppartenenza;
         statoPagato = false;

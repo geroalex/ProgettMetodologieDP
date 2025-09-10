@@ -36,18 +36,18 @@ public class Stipendio extends MovimentiProgrammati{
         Importo stipendioMensile = new Importo(getImporto().getValoreDouble() / 12);
         annoCorrente = LocalDate.of(LocalDate.now().getYear(), 1, 28);
         for(int i = 0; i < 12; i++)
-            mensilitaAnnoCorrente.add(new MensilitaStipendio(stipendioMensile, annoCorrente.plusMonths(i), this));
+            mensilitaAnnoCorrente.add(new MensilitaStipendio(stipendioMensile, annoCorrente.plusMonths(i), this, false));
 
         for(MensilitaStipendio m : mensilitaAnnoCorrente)
             if(m.getDataStipendio().isBefore(LocalDate.now())) m.contabilizza();
 
         if(!(getQuando().getYear() == annoCorrente.getYear())){
-            tredicesima = new MensilitaStipendio(stipendioMensile, LocalDate.of(annoCorrente.getYear(), 12, 31), this);
+            tredicesima = new MensilitaStipendio(stipendioMensile, LocalDate.of(annoCorrente.getYear(), 12, 31), this, true);
             return;
         }
 
         int mesiDaConsiderare = 12 - getQuando().getMonthValue();
-        tredicesima = new MensilitaStipendio(new Importo((stipendioMensile.getValoreDouble() * 0.08) * mesiDaConsiderare), LocalDate.of(annoCorrente.getYear(), 12, 31), this);
+        tredicesima = new MensilitaStipendio(new Importo((stipendioMensile.getValoreDouble() * 0.08) * mesiDaConsiderare), LocalDate.of(annoCorrente.getYear(), 12, 31), this, true);
 
     }
 

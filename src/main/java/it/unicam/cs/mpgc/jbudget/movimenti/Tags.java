@@ -6,6 +6,7 @@ public class Tags implements Comparable<Tags>{
     private  String descrizioneTag;
     private  int pesoTag;
 
+
     public Tags(String tipoTag, int pesoTag){
         this(tipoTag, "Descrizione vuota", pesoTag);
     }

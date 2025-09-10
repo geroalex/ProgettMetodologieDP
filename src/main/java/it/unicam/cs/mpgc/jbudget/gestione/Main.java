@@ -12,9 +12,19 @@ public class Main {
 
     public static void main(String[] args){
         ContoCorrente cc = new ContoCorrente();
-        MovimentoSemplice acquistoCasa = new MovimentoSemplice(new Importo(-1.0), "Cazzo");
+
+        MovimentoSemplice acquistoCasa = new MovimentoSemplice(new Importo(-1.0), "Casa");
         acquistoCasa.aggiungiTag(new Tags("Casa", 1));
+
+        MovimentoSemplice acquistoSport = new MovimentoSemplice(new Importo(-1.0), "Sport");
+        acquistoSport.aggiungiTag(new Tags("Sport", 2));
+
+        MovimentoSemplice ricevutaOccasionale = new MovimentoSemplice(new Importo(100.0), "Lavoro");
+        ricevutaOccasionale.aggiungiTag(new Tags("Lavoro", 3));
+
         cc.aggiungiMovimento(acquistoCasa);
+        cc.aggiungiMovimento(acquistoSport);
+        cc.aggiungiMovimento(ricevutaOccasionale);
 
         cc.versa(new Importo(1000.0));
 
@@ -27,22 +37,9 @@ public class Main {
         System.out.println(cc.getSaldo());
         System.out.println("----------------------------------------");
 
+        System.out.println(cc.getMovimentiOrdinati().toString());
 
-        Mutuo mutuoCasa = new Mutuo(new Importo(10000), 4.0f, 48);
-        //System.out.println(mutuoCasa.toString());
-
-        cc.creaMovimentoProgrammato(mutuoCasa);
-
-
-        cc.contabilizza(1);
-        System.out.println(cc.getMovimenti().toString());
-
-        System.out.println(cc.getSaldo());
-
-
-        Stipendio stipendio = new Stipendio(LocalDate.now(), new Importo(1200));
-        System.out.println(stipendio.toString());
-
+        //System.out.println(cc.getMovimenti().toString());
 
     }
 

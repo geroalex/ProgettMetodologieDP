@@ -105,6 +105,11 @@ public class ContoCorrente {
     public ArrayList<Movimento> getMovimenti(){
         return movimenti;
     }
+    public ArrayList<Movimento> getMovimentiOrdinati(){
+        ArrayList<Movimento> ritorno = new ArrayList<>(movimenti);
+        ritorno.sort(null);
+        return ritorno;
+    }
     public Importo getSaldo(){ return saldo;}
     public String getIban(){ return iban;}
 

@@ -69,6 +69,7 @@ public abstract class Movimento implements Comparable<Movimento>{
     public ArrayList<Tags> getTagList() {
         return tagList;
     }
+    public Tags getTagPiuImportante() { return tagList.get(tagPiuImportante); }
     /**
      * Aggiungi un tag alla lista dei tags
      * @param tag : tag da aggiungere
