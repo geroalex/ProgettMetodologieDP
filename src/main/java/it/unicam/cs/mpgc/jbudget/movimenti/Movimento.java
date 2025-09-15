@@ -14,7 +14,7 @@ public abstract class Movimento implements Comparable<Movimento>{
     private boolean isUscita;
     private ArrayList<Tags> tagList;
     private int tagPiuImportante;
-    private boolean contabilizzato;
+    protected boolean contabilizzato;
     private LocalDate dataMovimento;
 
 
@@ -134,5 +134,6 @@ public abstract class Movimento implements Comparable<Movimento>{
                 contabilizzato + " " +
                 "Tags: " + tagList.toString();
     }
+
 
 }

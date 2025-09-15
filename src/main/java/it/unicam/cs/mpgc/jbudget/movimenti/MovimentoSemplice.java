@@ -2,6 +2,8 @@ package it.unicam.cs.mpgc.jbudget.movimenti;
 
 import it.unicam.cs.mpgc.jbudget.valori.Importo;
 
+import java.time.LocalDate;
+
 public class MovimentoSemplice extends Movimento{
 
     public MovimentoSemplice(Importo importo) {
@@ -12,5 +14,8 @@ public class MovimentoSemplice extends Movimento{
         super(importo, tipoMovimento);
     }
 
+    public MovimentoSemplice(Importo importo, String tipoMovimento, LocalDate data) {
+        super(importo, data, tipoMovimento);
+    }
 
 }

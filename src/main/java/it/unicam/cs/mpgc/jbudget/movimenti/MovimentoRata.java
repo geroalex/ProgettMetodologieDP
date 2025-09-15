@@ -43,15 +43,5 @@ public class MovimentoRata extends Movimento {
     //public LocalDate getData() {
         //return data;
     //}
-    public String toString(){
-        return getTipoMovimento() +
-                " " +
-                getImporto().toString() +
-                " " +
-                getDataMovimento().toString() +
-                " " +
-                "Contabilizzato: " +
-                isContabilizzato() + " " +
-                "Tags: " + getTagList().toString();
-    }
+
 }
