@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 public class ContoCorrente {
 
-    
     private ArrayList<Movimento> movimenti;
     private ArrayList<MovimentiProgrammati> mProgrammati;
     private Importo saldo;
