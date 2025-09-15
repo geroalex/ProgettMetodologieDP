@@ -14,6 +14,11 @@ public class CreatoreConto extends JFrame implements Runnable, ActionListener {
     private JPanel creatoreConto;
     private JButton creaContoBtn;
     private JTextField codiceConto;
+    private MenuPrincipale appartenenza;
+
+    public CreatoreConto(MenuPrincipale appartenenza) {
+        this.appartenenza = appartenenza;
+    }
 
     @Override
     public void run() {
@@ -59,7 +64,9 @@ public class CreatoreConto extends JFrame implements Runnable, ActionListener {
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
         if (source == creaContoBtn) {
-            MemoriaConti.aggiungiConto(new ContoCorrente(codiceConto.getText()));
+            ContoCorrente nuovoConto = new ContoCorrente(codiceConto.getText());
+            MemoriaConti.aggiungiConto(nuovoConto);
+            appartenenza.cancellaEScrivi(nuovoConto.getIban());
             this.dispose();
         }
 

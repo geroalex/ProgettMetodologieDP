@@ -39,7 +39,7 @@ public class Stipendio extends MovimentiProgrammati{
             mensilitaAnnoCorrente.add(new MensilitaStipendio(stipendioMensile, annoCorrente.plusMonths(i), this, false));
 
         for(MensilitaStipendio m : mensilitaAnnoCorrente)
-            if(m.getDataStipendio().isBefore(LocalDate.now())) m.contabilizza();
+            if(m.getDataMovimento().isBefore(LocalDate.now())) m.contabilizza();
 
         if(!(getQuando().getYear() == annoCorrente.getYear())){
             tredicesima = new MensilitaStipendio(stipendioMensile, LocalDate.of(annoCorrente.getYear(), 12, 31), this, true);

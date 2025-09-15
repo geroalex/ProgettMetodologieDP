@@ -7,13 +7,13 @@ import java.awt.*;
 
 public class MenuPrincipale extends JPanel {
 
-
+    private JTextArea txtArea;
 
     public MenuPrincipale(){
 
         setLayout(new BorderLayout());
 
-        JTextArea txtArea = new JTextArea("Risultati");
+        txtArea = new JTextArea("Risultati");
         BarraDegliStrumenti barraDiMenu = new BarraDegliStrumenti(this);
         barraDiMenu.setFloatable(false);
 
@@ -24,8 +24,11 @@ public class MenuPrincipale extends JPanel {
     }
 
     public void scrivi(String s){
-        JTextArea txtArea = (JTextArea) getComponent(1);
         txtArea.append(s + "\n");
+    }
+
+    public void cancellaEScrivi(String s){
+        txtArea.setText(s);
     }
 
 }

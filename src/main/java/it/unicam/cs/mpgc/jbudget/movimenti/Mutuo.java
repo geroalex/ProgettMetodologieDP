@@ -58,7 +58,7 @@ public class Mutuo extends MovimentiProgrammati{
             ratePagate++;
             return false;
         }
-        //rate.get(ratePagate).contabilizza(cc);
+
         ratePagate++;
         return true;
     }

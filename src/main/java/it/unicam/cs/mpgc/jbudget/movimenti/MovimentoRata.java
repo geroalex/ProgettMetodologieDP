@@ -40,8 +40,6 @@ public class MovimentoRata extends Movimento {
     public float getTassoInteresse() {
         return tassoInteresse;
     }
-    //public LocalDate getData() {
-        //return data;
-    //}
+
 
 }

@@ -11,8 +11,8 @@ import java.time.LocalDate;
  */
 public class MensilitaStipendio extends Movimento {
 
-    private LocalDate dataStipendio;
-    private boolean statoPagato;
+
+    //private boolean statoPagato;
     private final Stipendio stipendioDiAppartenenza;
 
     public MensilitaStipendio(Importo importo, Stipendio stipendioDiAppartenenza, boolean tredicesima) {
@@ -21,18 +21,10 @@ public class MensilitaStipendio extends Movimento {
 
     public MensilitaStipendio(Importo importo, LocalDate dataStipendio, Stipendio stipendioDiAppartenenza, boolean tredicesima) {
         super(importo, dataStipendio, tredicesima ? "Stipendio Tredicesima" : "Stipendio");
-        this.dataStipendio = dataStipendio;
         this.stipendioDiAppartenenza = stipendioDiAppartenenza;
-        statoPagato = false;
         this.aggiungiTag(new Tags("Stipendio", 1));
     }
 
-    public boolean statoPagato() {
-        return statoPagato;
-    }
-    public LocalDate getDataStipendio() {
-        return dataStipendio;
-    }
     public Stipendio getStipendioDiAppartenenza() { return stipendioDiAppartenenza; }
 
 }

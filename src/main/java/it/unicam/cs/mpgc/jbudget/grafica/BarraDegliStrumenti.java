@@ -55,7 +55,7 @@ public class BarraDegliStrumenti extends JToolBar implements ActionListener {
     }
 
     private void creaConto(){
-        CreatoreConto creatoreConto = new CreatoreConto();
+        CreatoreConto creatoreConto = new CreatoreConto(appartenenza);
         creatoreConto.run();
     }
 
